@@ -44,19 +44,25 @@ export function meta({}: Route.MetaArgs) {
 
 export async function loader({ context }: Route.LoaderArgs) {
   const querySnapshotPostData = await getDocs(collection(db, "posts")); 
+  
   const AllPosts = querySnapshotPostData.docs.map((doc) => {
     const fetchedData = { dbid: doc.id, PostData: doc.data() };
     const postdata = { ...fetchedData.PostData, id: doc.id };
-   
-
+    console.log("Post Data is : ", postdata);
+    
     return postdata;
   });
-  
-  return { posts: AllPosts ,message: "Hello from Vercel" };
+  const res = Object.values(AllPosts);
+  console.log("All Posts are : ", res);
+  return { posts: res, message: "Hello from Vercel" };
 }
 
 export default function Home({ loaderData }: Route.ComponentProps) {
-  console.log("Loader Data is : ", loaderData);
+  console.log("Loader Data is : ", loaderData.message);
   
-  return <Welcome message={loaderData.message} />;
+  return (
+    <>
+    <Welcome message={loaderData.message} />
+    </>
+  );
 }
