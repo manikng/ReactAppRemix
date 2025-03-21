@@ -57,53 +57,8 @@ export async function loader({ context }: Route.LoaderArgs) {
   return { posts: res, message: "Hello from Vercel" };
 }
 
-export async function clientAction({request,}: Route.ClientActionArgs) {
-    let formData = await request.formData();
-    let imageUrlfromCloudinary = await CloudinaryUpload(formData);
-    console.log("Image URL in cloudinary is :", imageUrlfromCloudinary);
-    let user_avatar_url = User_Avatar_image;
-    let newPost = {
-        dbid: "",
-        id: postDetails.length + 1,
-        avatarUrl: user_avatar_url,
-        description:
-          formData.get("Product-Description")?.toString() || "No description",
-        tags: (formData.get("Tags")?.toString() || "")
-          .split(",")
-          .map((t) => t.trim()),
-        price: `${formData.get("Price")?.toString() || "0"}`,
-        productName: formData.get("Product-Name")?.toString() || "Unnamed Product",
-        imageUrl: imageUrlfromCloudinary,
-        isliked: false,
-        likes: 0,
-        comments: 0,
-      };
-
-      try {
-        let docRef = await addDoc(collection(db, "posts"), newPost);
-        console.log("Document written with ID: ", docRef.id);
-    
-        postDetails.push(newPost);
-    
-        // Return success instead of redirecting
-        return {
-          success: true,
-          message: "Post created successfully!",
-          
-        };
-      } catch (error) {
-        console.error("Error adding document: ", error);
-        return {
-          success: false,
-          message: "Failed to create post",
-          
-        };
-      }
-    
-}
-
-export default function Home({ loaderData ,actionData }: Route.ComponentProps) {
-  console.log("Loader Data s : ", loaderData.posts);
+export default function Home({ loaderData }: Route.ComponentProps) {
+  console.log("Loader Data is : ", loaderData.message);
   
   return (
     <>

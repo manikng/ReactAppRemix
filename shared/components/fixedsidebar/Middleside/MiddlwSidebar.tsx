@@ -1,6 +1,6 @@
 import React from "react";
 import FeedPost from "./../../PostCard/FeedPost";
-import { CreatePostCard } from "~/routes/home";
+import { CreatePostCard } from "~/routes/temhome";
 import type { Post } from "shared/types/post";
 
 
