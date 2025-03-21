@@ -9,6 +9,7 @@
     "typecheck": "react-router typegen && tsc"
   },
   "dependencies": {
+    "": "file:",
     "@react-router/node": "^7.1.5",
     "isbot": "^5.1.17",
     "react": "^19.0.0",
